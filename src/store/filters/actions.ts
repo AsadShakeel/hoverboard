@@ -1,4 +1,4 @@
-import { store } from '../';
+  import { store } from '../';
 import { Filter } from '../../models/filter';
 import { SET_FILTERS } from './types';
 

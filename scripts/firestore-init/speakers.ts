@@ -1,4 +1,4 @@
-import { firestore } from '../firebase-config';
+// import { firestore } from '../firebase-config';
 import data from '../../docs/default-firebase-data.json';
 
 export const importSpeakers = () => {
@@ -8,16 +8,16 @@ export const importSpeakers = () => {
   }
   console.log('Importing', Object.keys(speakers).length, 'speakers...');
 
-  const batch = firestore.batch();
+  // const batch = firestore.batch();
 
-  Object.keys(speakers).forEach((speakerId, order) => {
-    batch.set(firestore.collection('speakers').doc(speakerId), {
-      ...speakers[speakerId],
-      order,
-    });
-  });
+  // Object.keys(speakers).forEach((speakerId, order) => {
+    // batch.set(firestore.collection('speakers').doc(speakerId), {
+    //   ...speakers[speakerId],
+    //   order,
+    // });
+  // });
 
-  return batch.commit().then((results) => {
-    console.log('Imported data for', results.length, 'speakers');
-  });
+  // return batch.commit().then((results) => {
+  //   console.log('Imported data for', results.length, 'speakers');
+  // });
 };

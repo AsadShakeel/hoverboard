@@ -1,4 +1,4 @@
-import { firestore } from '../firebase-config';
+// import { firestore } from '../firebase-config';
 import data from '../../docs/default-firebase-data.json';
 
 export const importGallery = () => {
@@ -8,16 +8,16 @@ export const importGallery = () => {
   }
   console.log('Importing gallery...');
 
-  const batch = firestore.batch();
+  // const batch = firestore.batch();
 
-  Object.keys(gallery).forEach((docId: string) => {
-    batch.set(firestore.collection('gallery').doc(docId.padStart(3, '0')), {
-      url: gallery[Number(docId)],
-      order: docId,
-    });
-  });
+  // Object.keys(gallery).forEach((docId: string) => {
+    // batch.set(firestore.collection('gallery').doc(docId.padStart(3, '0')), {
+    //   url: gallery[Number(docId)],
+    //   order: docId,
+    // });
+  // });
 
-  return batch.commit().then((results) => {
-    console.log('Imported data for', results.length, 'images');
-  });
+  // return batch.commit().then((results) => {
+  //   console.log('Imported data for', results.length, 'images');
+  // });
 };

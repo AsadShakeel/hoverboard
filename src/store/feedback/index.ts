@@ -1,27 +1,24 @@
 import { Failure, Initialized, Pending, RemoteData, Success } from '@abraham/remotedata';
-import { createAsyncThunk, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import {
-  collectionGroup,
-  deleteDoc,
-  doc,
-  onSnapshot,
-  query,
-  setDoc,
-  Unsubscribe,
-  where,
-} from 'firebase/firestore';
-import { RootState, store } from '..';
-import { db } from '../../firebase';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+// import {
+//   collectionGroup,
+//   deleteDoc,
+//   doc,
+//   onSnapshot,
+//   query,
+//   setDoc,
+//   Unsubscribe,
+//   where,
+// } from 'firebase/firestore';
+import { RootState } from '..';
+// import { db } from '../../firebase';
 import { Feedback, FeedbackId } from '../../models/feedback';
-import { dataWithParentId } from '../../utils/firestore';
-import { selectUser } from '../user/selectors';
-import { UserState } from '../user/types';
 
 export type SessionFeedback = RemoteData<Error, Feedback | false>;
 
 export type FeedbackState = {
   set: RemoteData<Error, FeedbackId>;
-  subscription: RemoteData<Error, Unsubscribe>;
+  // subscription: RemoteData<Error, Unsubscribe>;
   data: RemoteData<Error, Feedback[]>;
   delete: RemoteData<Error, FeedbackId>;
 };
@@ -33,23 +30,23 @@ export const initialState = {
   delete: new Initialized(),
 } as FeedbackState;
 
-export const subscribe = (userId: string) => {
-  return onSnapshot(
-    query(collectionGroup(db, 'feedback'), where('userId', '==', userId)),
-    (snapshot) => store.dispatch(setSuccess(snapshot.docs.map<Feedback>(dataWithParentId))),
-    (error) => store.dispatch(setFailure(error as Error))
-  );
-};
+// export const subscribe = (userId: string) => {
+//   return onSnapshot(
+//     query(collectionGroup(db, 'feedback'), where('userId', '==', userId)),
+//     (snapshot) => store.dispatch(setSuccess(snapshot.docs.map<Feedback>(dataWithParentId))),
+//     (error) => store.dispatch(setFailure(error as Error))
+//   );
+// };
 
 export const setFeedback = createAsyncThunk<FeedbackId, Feedback>(
   'feedback/set',
   async (data: Feedback) => {
-    await setDoc(doc(db, 'sessions', data.parentId, 'feedback', data.userId), {
-      contentRating: data.contentRating,
-      styleRating: data.styleRating,
-      comment: data.comment,
-      userId: data.userId,
-    });
+    // await setDoc(doc(db, 'sessions', data.parentId, 'feedback', data.userId), {
+    //   contentRating: data.contentRating,
+    //   styleRating: data.styleRating,
+    //   comment: data.comment,
+    //   userId: data.userId,
+    // });
 
     return {
       parentId: data.parentId,
@@ -62,7 +59,7 @@ export const setFeedback = createAsyncThunk<FeedbackId, Feedback>(
 export const deleteFeedback = createAsyncThunk<FeedbackId, FeedbackId>(
   'feedback/delete',
   async (data: FeedbackId) => {
-    await deleteDoc(doc(db, 'sessions', data.parentId, 'feedback', data.userId));
+    // await deleteDoc(doc(db, 'sessions', data.parentId, 'feedback', data.userId));
 
     return data;
   }
@@ -72,18 +69,18 @@ const feedbackSlice = createSlice({
   name: 'feedback',
   initialState,
   reducers: {
-    subscribeToFeedback(state, action: PayloadAction<string>) {
-      if (state.subscription instanceof Initialized) {
-        state.subscription = new Success(subscribe(action.payload));
-        state.data = new Pending();
-      }
+    subscribeToFeedback() {
+      // if (state.subscription instanceof Initialized) {
+      //   state.subscription = new Success(subscribe(action.payload));
+      //   state.data = new Pending();
+      // }
     },
     unsubscribeFromFeedback(state) {
-      if (state.subscription instanceof Success) {
-        state.subscription.data();
-      }
+      // if (state.subscription instanceof Success) {
+      //   state.subscription.data();
+      // }
       state.set = new Initialized();
-      state.subscription = new Initialized();
+      // state.subscription = new Initialized();
       state.data = new Initialized();
       state.delete = new Initialized();
     },
@@ -117,46 +114,45 @@ const feedbackSlice = createSlice({
   },
 });
 
-const { subscribeToFeedback, unsubscribeFromFeedback, setSuccess, setFailure } =
+const { unsubscribeFromFeedback } =
   feedbackSlice.actions;
 
-const selectParentId = (_state: RootState, parentId: string | undefined) => parentId;
 export const selectFeedbackSet = (state: RootState) => state.feedback.set;
-export const selectFeedbackSubscription = (state: RootState) => state.feedback.subscription;
+// export const selectFeedbackSubscription = (state: RootState) => state.feedback.subscription;
 export const selectFeedback = (state: RootState) => state.feedback.data;
 export const selectFeedbackDelete = (state: RootState) => state.feedback.delete;
 
-const selectSubscription = createSelector(
-  selectUser,
-  selectFeedbackSubscription,
-  (user: UserState, subscription: FeedbackState['subscription']): FeedbackState['subscription'] => {
-    if (user instanceof Success && subscription instanceof Initialized) {
-      store.dispatch(subscribeToFeedback(user.data.uid));
-      return new Pending();
-    } else {
-      return subscription;
-    }
-  }
-);
+// const selectSubscription = createSelector(
+  // selectUser,
+  // selectFeedbackSubscription,
+  // (user: UserState, subscription: FeedbackState['subscription']): FeedbackState['subscription'] => {
+  //   if (user instanceof Success && subscription instanceof Initialized) {
+  //     store.dispatch(subscribeToFeedback(user.data.uid));
+  //     return new Pending();
+  //   } else {
+  //     return subscription;
+  //   }
+  // }
+// );
 
-export const selectFeedbackById = createSelector(
-  selectParentId,
-  selectSubscription,
-  selectFeedback,
-  (
-    parentId: string | undefined,
-    subscription: FeedbackState['subscription'],
-    feedback: FeedbackState['data']
-  ): SessionFeedback => {
-    if (feedback instanceof Success) {
-      return new Success(feedback.data.find((review) => review.parentId === parentId) ?? false);
-    } else if (subscription instanceof Pending || subscription instanceof Success) {
-      return new Pending();
-    } else {
-      return feedback;
-    }
-  }
-);
+// export const selectFeedbackById = createSelector(
+  // selectParentId,
+  // selectSubscription,
+  // selectFeedback,
+  // (
+  //   parentId: string | undefined,
+  //   // subscription: FeedbackState['subscription'],
+  //   feedback: FeedbackState['data']
+  // ): SessionFeedback => {
+  //   // if (feedback instanceof Success) {
+  //   //   return new Success(feedback.data.find((review) => review.parentId === parentId) ?? false);
+  //   // } else if (subscription instanceof Pending || subscription instanceof Success) {
+  //   //   return new Pending();
+  //   // } else {
+  //   //   return feedback;
+  //   // }
+  // }
+// );
 
 export { unsubscribeFromFeedback };
 export default feedbackSlice.reducer;

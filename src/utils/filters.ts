@@ -1,14 +1,14 @@
 import { Filter } from '../models/filter';
 import { FilterGroupKey } from '../models/filter-group';
 import { setFilters } from '../store/filters/actions';
-import { logPageView } from './analytics';
+// import { logPageView } from './analytics';
 
 const setQueryString = (search: string): void => {
   const [url] = location.href.split('?');
 
   window.history.pushState({}, '', [url, search].filter(Boolean).join('?'));
   setFilters(parseFilters());
-  logPageView();
+  // logPageView();
 };
 
 export const clearFilters = () => setQueryString('');

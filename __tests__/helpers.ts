@@ -1,11 +1,11 @@
-import { assertFails, assertSucceeds } from '@firebase/rules-unit-testing';
+// import { assertFails, assertSucceeds } from '@firebase/rules-unit-testing';
 import { expect } from '@jest/globals';
 
 expect.extend({
-  async toAllow(pr: Promise<any>) {
+  async toAllow() {
     let pass = false;
     try {
-      await assertSucceeds(pr);
+      // await assertSucceeds(pr);
       pass = true;
     } catch (error) {
       console.log(error);
@@ -19,10 +19,10 @@ expect.extend({
 });
 
 expect.extend({
-  async toDeny(pr: Promise<any>) {
+  async toDeny() {
     let pass = false;
     try {
-      await assertFails(pr);
+      // await assertFails(pr);
       pass = true;
     } catch (error) {
       console.log(error);

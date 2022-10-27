@@ -1,25 +1,19 @@
-import { Failure } from '@abraham/remotedata';
 import '@material/mwc-button';
 import '@material/mwc-dialog';
-import { Dialog } from '@material/mwc-dialog';
-import { observe, property, query } from '@polymer/decorators';
+// import { Dialog } from '@material/mwc-dialog';
+import { property } from '@polymer/decorators';
 import '@polymer/iron-icon';
 import '@polymer/paper-button';
 import { html, PolymerElement } from '@polymer/polymer';
 import { RootState } from '../../store';
-import { mergeAccounts, signIn } from '../../store/auth/actions';
-import { selectAuthMergeable } from '../../store/auth/selectors';
+// import { mergeAccounts, signIn } from '../../store/auth/actions';
+// import { selectAuthMergeable } from '../../store/auth/selectors';
 import { initialAuthState } from '../../store/auth/state';
-import { ExistingAccountError } from '../../store/auth/types';
-import { closeDialog, openSigninDialog } from '../../store/dialogs/actions';
 import { selectIsDialogOpen } from '../../store/dialogs/selectors';
 import { DIALOG } from '../../store/dialogs/types';
 import { ReduxMixin } from '../../store/mixin';
 import { initialUserState } from '../../store/user/state';
-import { TempAny } from '../../temp-any';
-import { signIn as signInText, signInDialog, signInProviders } from '../../utils/data';
 import '../../utils/icons';
-import { getProviderCompanyName, PROVIDER } from '../../utils/providers';
 
 class SigninDialog extends ReduxMixin(PolymerElement) {
   static get template() {
@@ -98,68 +92,28 @@ class SigninDialog extends ReduxMixin(PolymerElement) {
   @property({ type: Object })
   private auth = initialAuthState;
   @property({ type: Boolean })
-  private isMergeState = false;
-  @property({ type: Boolean })
   private open = false;
   @property({ type: String })
   private email = '';
   @property({ type: String })
   private providerCompanyName = '';
 
-  @query('#dialog')
-  dialog!: Dialog;
-
-  private signInProviders = signInProviders;
-  private signInDialog = signInDialog;
-  private signInText = signInText;
 
   override ready() {
     super.ready();
-    this.dialog.addEventListener('closed', () => closeDialog());
+    // this.dialog.addEventListener('closed', () => closeDialog());
   }
 
   override stateChanged(state: RootState) {
     this.user = state.user;
     this.auth = state.auth;
-    this.isMergeState = selectAuthMergeable(state);
+    // this.isMergeState = selectAuthMergeable(state);
     this.open = selectIsDialogOpen(state, DIALOG.SIGNIN);
   }
 
-  @observe('isMergeState')
-  private onIsMergeState(isMergeState: boolean) {
-    closeDialog();
-    if (isMergeState && this.auth instanceof Failure) {
-      const error: ExistingAccountError = this.auth.error;
-      if (!error.email || !error.providerId) {
-        // TODO: Improve error handling
-        return;
-      }
-      this.email = error.email;
-      this.providerCompanyName = error.providerId && getProviderCompanyName(error.providerId);
-      openSigninDialog();
-    }
-  }
 
-  private mergeAccounts() {
-    if (this.auth instanceof Failure) {
-      const error: ExistingAccountError = this.auth.error;
-      mergeAccounts(error.providerId as TempAny, error.credential as TempAny);
-      closeDialog();
-    }
-  }
 
-  private close() {
-    closeDialog();
-  }
 
-  private signIn(event: MouseEvent) {
-    if (event.target instanceof Element) {
-      const providerUrl = event.target.getAttribute('provider-url') as PROVIDER;
-      signIn(providerUrl);
-    } else {
-      throw new Error('Error starting sign in');
-    }
-  }
 }
 
 window.customElements.define(SigninDialog.is, SigninDialog);

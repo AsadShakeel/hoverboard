@@ -1,11 +1,10 @@
-import { Success } from '@abraham/remotedata';
 import '@polymer/app-layout/app-drawer-layout/app-drawer-layout';
 import '@polymer/app-layout/app-drawer/app-drawer';
 import { AppDrawerElement } from '@polymer/app-layout/app-drawer/app-drawer';
 import '@polymer/app-layout/app-header-layout/app-header-layout';
 import '@polymer/app-layout/app-header/app-header';
 import '@polymer/app-layout/app-toolbar/app-toolbar';
-import { computed, customElement, property, query } from '@polymer/decorators';
+import { customElement, property, query } from '@polymer/decorators';
 import '@polymer/iron-icon';
 import '@polymer/iron-selector/iron-selector';
 import { html, PolymerElement } from '@polymer/polymer';
@@ -25,7 +24,7 @@ import './elements/header-toolbar';
 import './elements/shared-styles';
 import { selectRouteName, startRouter } from './router';
 import { RootState, store } from './store';
-import { onUser } from './store/auth/actions';
+// import { onUser } from './store/auth/actions';
 import { queueSnackbar } from './store/snackbars';
 import { fetchTickets } from './store/tickets/actions';
 import { initialTicketsState } from './store/tickets/state';
@@ -256,7 +255,7 @@ export class HoverboardApp extends PolymerElement {
     console.log('Hoverboard is ready!');
     this.removeAttribute('unresolved');
     startRouter(this.main);
-    onUser();
+    // onUser();
   }
 
   closeDrawer() {
@@ -271,14 +270,14 @@ export class HoverboardApp extends PolymerElement {
     this.drawerOpened = e.detail.value;
   }
 
-  @computed('tickets')
-  private get ticketUrl(): string {
-    if (this.tickets instanceof Success && this.tickets.data.length > 0) {
-      const availableTicket = this.tickets.data.find((ticket) => ticket.available);
-      const ticket = availableTicket || this.tickets.data[0];
-      return ticket?.url || '';
-    } else {
-      return '';
-    }
-  }
+  // @computed('tickets')
+  // private get ticketUrl(): string {
+  //   if (this.tickets instanceof Success && this.tickets.data.length > 0) {
+  //     // const availableTicket = this.tickets.data.find((ticket) => ticket.available);
+  //     // const ticket = availableTicket || this.tickets.data[0];
+  //     // return ticket?.url || '';
+  //   } else {
+  //     return '';
+  //   }
+  // }
 }

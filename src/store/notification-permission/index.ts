@@ -1,14 +1,14 @@
 import { Failure, Initialized, Pending, RemoteData, Success } from '@abraham/remotedata';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getMessaging, getToken } from 'firebase/messaging';
-import { firebaseApp } from '../../firebase';
+// import { getMessaging, getToken } from 'firebase/messaging';
+// import { firebaseApp } from '../../firebase';
 
 export enum PROMPT_USER {
   YES = 'YES',
   NO = 'NO',
 }
 
-const messaging = getMessaging(firebaseApp);
+// const messaging = getMessaging(firebaseApp);
 
 // Eslint doesn't like when using the built in type
 export type NotificationPermission = typeof Notification.permission;
@@ -27,8 +27,8 @@ export const requestNotificationPermission = createAsyncThunk<string | undefined
         : Notification.permission;
 
     if (permission === 'granted') {
-      const token = await getToken(messaging);
-      return token;
+      // const token = await getToken(messaging);
+      // return token;
     } else if (permission === 'default') {
       return undefined;
     } else {

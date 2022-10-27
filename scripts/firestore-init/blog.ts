@@ -1,4 +1,4 @@
-import { firestore } from '../firebase-config';
+// import { firestore } from '../firebase-config';
 import data from '../../docs/default-firebase-data.json';
 
 export const importBlog = () => {
@@ -8,13 +8,13 @@ export const importBlog = () => {
   }
   console.log('Importing blog...');
 
-  const batch = firestore.batch();
+  // const batch = firestore.batch();
 
-  Object.keys(blog).forEach((docId: string) => {
-    batch.set(firestore.collection('blog').doc(docId), blog[docId]);
-  });
+  // Object.keys(blog).forEach((docId: string) => {
+    // batch.set(firestore.collection('blog').doc(docId), blog[docId]);
+  // });
 
-  return batch.commit().then((results) => {
-    console.log('Imported data for', results.length, 'blog posts');
-  });
+  // return batch.commit().then((results) => {
+  //   console.log('Imported data for', results.length, 'blog posts');
+  // });
 };

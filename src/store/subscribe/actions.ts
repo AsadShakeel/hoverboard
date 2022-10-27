@@ -1,7 +1,7 @@
-import { doc, setDoc } from 'firebase/firestore';
+// import { doc, setDoc } from 'firebase/firestore';
 import { Dispatch } from 'redux';
 import { store } from '../';
-import { db } from '../../firebase';
+// import { db } from '../../firebase';
 import { DialogData } from '../../models/dialog-form';
 import { subscribeBlock } from '../../utils/data';
 import { queueSnackbar } from '../snackbars';
@@ -13,15 +13,9 @@ import {
   SUBSCRIBE_SUCCESS,
 } from './types';
 
-const setSubscribe = async (data: DialogData): Promise<true> => {
-  const id = data.email.replace(/[^\w\s]/gi, '');
-  const subscriber = {
-    email: data.email,
-    firstName: data.firstFieldValue || '',
-    lastName: data.secondFieldValue || '',
-  };
+const setSubscribe = async (): Promise<true> => {
 
-  await setDoc(doc(db, 'subscribers', id), subscriber);
+  // await setDoc(doc(db, 'subscribers', id), subscriber);
 
   return true;
 };

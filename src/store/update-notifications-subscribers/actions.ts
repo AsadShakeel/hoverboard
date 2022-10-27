@@ -1,7 +1,7 @@
-import { deleteDoc, doc, setDoc, Timestamp } from 'firebase/firestore';
+// import { deleteDoc, doc, setDoc, Timestamp } from 'firebase/firestore';
 import { Dispatch } from 'redux';
 import { store } from '..';
-import { db } from '../../firebase';
+// import { db } from '../../firebase';
 import { notifications } from '../../utils/data';
 import { queueSnackbar } from '../snackbars';
 import {
@@ -12,16 +12,16 @@ import {
   UPDATE_NOTIFICATION_SUBSCRIBERS_SUCCESS,
 } from './types';
 
-const setNotificationsSubscribersDoc = async (token: string): Promise<void> => {
-  await setDoc(doc(db, 'notificationsSubscribers', token), {
-    value: true,
-    updatedAt: Timestamp.now(),
-  });
-};
+// const setNotificationsSubscribersDoc = async (token: string): Promise<void> => {
+  // await setDoc(doc(db, 'notificationsSubscribers', token), {
+  //   value: true,
+  //   updatedAt: Timestamp.now(),
+  // });
+// };
 
-const removeNotificationsSubscribersDoc = async (token: string): Promise<void> => {
-  await deleteDoc(doc(db, 'notificationsSubscribers', token));
-};
+// const removeNotificationsSubscribersDoc = async (token: string): Promise<void> => {
+  // await deleteDoc(doc(db, 'notificationsSubscribers', token));
+// };
 
 export const updateNotificationsSubscribers =
   (token: string) => async (dispatch: Dispatch<UpdateNotificationsSubscribersActions>) => {
@@ -30,7 +30,7 @@ export const updateNotificationsSubscribers =
     });
 
     try {
-      await setNotificationsSubscribersDoc(token);
+      // await setNotificationsSubscribersDoc(token);
 
       dispatch({
         type: UPDATE_NOTIFICATION_SUBSCRIBERS_SUCCESS,
@@ -46,13 +46,13 @@ export const updateNotificationsSubscribers =
   };
 
 export const clearNotificationsSubscribers =
-  (token: string) => async (dispatch: Dispatch<UpdateNotificationsSubscribersActions>) => {
+  () => async (dispatch: Dispatch<UpdateNotificationsSubscribersActions>) => {
     dispatch({
       type: UPDATE_NOTIFICATION_SUBSCRIBERS,
     });
 
     try {
-      await removeNotificationsSubscribersDoc(token);
+      // await removeNotificationsSubscribersDoc(token);
 
       dispatch({
         type: RESET_UPDATE_NOTIFICATIONS_SUBSCRIBERS,

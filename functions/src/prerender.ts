@@ -1,21 +1,21 @@
 /* eslint-disable */
 
 import express from 'express';
-import { getFirestore } from 'firebase-admin/firestore';
-import * as functions from 'firebase-functions';
+// import { getFirestore } from 'firebase-admin/firestore';
+// import * as functions from 'firebase-functions';
 import fetch from 'node-fetch';
 import url, { URL } from 'url';
 
 const app = express();
 
 const getSiteDomain = async () => {
-  const doc = await getFirestore().collection('config').doc('site').get();
-  return doc.data().domain;
+  // const doc = await getFirestore().collection('config').doc('site').get();
+  // return doc.data().domain;
 };
 
 const getRendertronServer = async () => {
-  const doc = await getFirestore().collection('config').doc('rendertron').get();
-  return doc.data().server;
+  // const doc = await getFirestore().collection('config').doc('rendertron').get();
+  // return doc.data().server;
 };
 
 /**
@@ -28,7 +28,7 @@ const generateUrl = async (request) => {
   // cloudfunctions.net)
   return url.format({
     protocol: request.protocol,
-    host: await getSiteDomain(),
+    // host: await getSiteDomain(),
     pathname: request.originalUrl,
   });
 };
@@ -89,4 +89,4 @@ app.get('*', async (req, res) => {
   }
 });
 
-export const prerender = functions.https.onRequest(app);
+// export const prerender = functions.https.onRequest(app);

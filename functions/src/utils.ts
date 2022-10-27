@@ -1,6 +1,6 @@
 // https://github.com/import-js/eslint-plugin-import/issues/1810
 // eslint-disable-next-line import/no-unresolved
-import type { DocumentData, QuerySnapshot } from 'firebase-admin/firestore';
+// import type { DocumentData, QuerySnapshot } from 'firebase-admin/firestore';
 // TODO: import actual types. Currently importing them changes `dist` structure.
 // import type { Schedule } from '../../src/models/schedule';
 // import type { Session } from '../../src/models/session';
@@ -31,12 +31,12 @@ export const combineTags = (speakerTags?: string[], sessionTags?: string[]): str
   return [...new Set(tags)];
 };
 
-export const snapshotToObject = (snapshot: QuerySnapshot<DocumentData>) => {
-  return snapshot.docs.reduce((data, doc) => {
-    data[doc.id] = doc.data();
-    return data;
-  }, {});
-};
+// export const snapshotToObject = (snapshot: QuerySnapshot<DocumentData>) => {
+//   return snapshot.docs.reduce((data, doc) => {
+//     data[doc.id] = doc.data();
+//     return data;
+//   }, {});
+// };
 
 export const isEmpty = (obj: object) => {
   return obj === undefined || obj === null || Object.keys(obj).length === 0;

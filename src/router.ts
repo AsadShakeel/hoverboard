@@ -1,5 +1,5 @@
 import { Route, Router } from '@vaadin/router';
-import { logPageView } from './utils/analytics.js';
+// import { logPageView } from './utils/analytics.js';
 import { CONFIG, getConfig } from './utils/config.js';
 
 export let router: Router;
@@ -15,7 +15,7 @@ window.addEventListener('vaadin-router-location-changed', (event) => {
   } else {
     console.error('Missing canonical link tag');
   }
-  logPageView();
+  // logPageView();
 });
 
 export const selectRouteName = (pathname: string): string => {

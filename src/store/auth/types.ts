@@ -1,5 +1,5 @@
 import { RemoteData } from '@abraham/remotedata';
-import { OAuthCredential } from 'firebase/auth';
+// import { OAuthCredential } from 'firebase/auth';
 import { PROVIDER } from '../../utils/providers';
 
 export const AUTH = 'AUTH';
@@ -9,7 +9,7 @@ export const UN_AUTH = 'UN_AUTH';
 
 export type ExistingAccountError = {
   code: string;
-  credential: OAuthCredential | null;
+  // credential: OAuthCredential | null;
   email: string | undefined;
   providerId: PROVIDER | undefined;
 };

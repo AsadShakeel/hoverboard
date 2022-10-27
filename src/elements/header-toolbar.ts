@@ -1,6 +1,6 @@
 import { Success } from '@abraham/remotedata';
 import '@polymer/app-layout/app-toolbar/app-toolbar';
-import { computed, customElement, observe, property } from '@polymer/decorators';
+import { customElement, observe, property } from '@polymer/decorators';
 import '@polymer/paper-button';
 import '@polymer/paper-icon-button';
 import '@polymer/paper-menu-button';
@@ -9,7 +9,7 @@ import { html, PolymerElement } from '@polymer/polymer';
 import { Hero } from '../models/hero';
 import { selectRouteName } from '../router';
 import { RootState } from '../store';
-import { signOut as signOutAction } from '../store/auth/actions';
+// import { signOut as signOutAction } from '../store/auth/actions';
 import { closeDialog, openSigninDialog } from '../store/dialogs/actions';
 import { selectIsDialogOpen } from '../store/dialogs/selectors';
 import { DIALOG } from '../store/dialogs/types';
@@ -285,7 +285,7 @@ export class HeaderToolbar extends ReduxMixin(PolymerElement) {
   }
 
   private signOut() {
-    signOutAction();
+    // signOutAction();
   }
 
   private onScroll() {
@@ -303,15 +303,15 @@ export class HeaderToolbar extends ReduxMixin(PolymerElement) {
     return signedIn || isTabletPlus;
   }
 
-  @computed('tickets')
-  private get ticketUrl() {
-    if (this.tickets instanceof Success && this.tickets.data.length > 0) {
-      const availableTicket = this.tickets.data.find((ticket) => ticket.available);
-      return (availableTicket || this.tickets.data[0])?.url || '';
-    } else {
-      return '';
-    }
-  }
+  // @computed('tickets')
+  // private get ticketUrl() {
+  //   if (this.tickets instanceof Success && this.tickets.data.length > 0) {
+  //     // const availableTicket = this.tickets.data.find((ticket) => ticket.available);
+  //     // return (availableTicket || this.tickets.data[0])?.url || '';
+  //   } else {
+  //     return '';
+  //   }
+  // }
 
   @observe('heroSettings')
   private onHeroSettings(settings: Hero) {

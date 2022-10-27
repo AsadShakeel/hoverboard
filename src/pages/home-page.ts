@@ -16,7 +16,7 @@ import '../elements/partners-block';
 import '../elements/speakers-block';
 import '../elements/subscribe-block';
 import '../elements/tickets-block';
-import { firebaseApp } from '../firebase';
+// import { firebaseApp } from '../firebase';
 import { store } from '../store';
 import { ReduxMixin } from '../store/mixin';
 import { queueSnackbar } from '../store/snackbars';
@@ -28,13 +28,12 @@ import {
   description,
   heroSettings,
   location,
-  showForkMeBlockForProjectIds,
   title,
   viewHighlights,
 } from '../utils/data';
 import '../utils/icons';
 import { INCLUDE_SITE_TITLE, updateMetadata } from '../utils/metadata';
-import { POSITION, scrollToElement } from '../utils/scrolling';
+import { scrollToElement } from '../utils/scrolling';
 
 @customElement('home-page')
 export class HomePage extends ReduxMixin(PolymerElement) {
@@ -294,22 +293,22 @@ export class HomePage extends ReduxMixin(PolymerElement) {
   }
 
   private scrollNextBlock() {
-    scrollToElement(this.hero, POSITION.BOTTOM);
+    // scrollToElement(this.hero, POSITION.BOTTOM);
   }
 
-  private shouldShowForkMeBlock(): boolean {
-    const showForkMeBlock = firebaseApp.options.appId
-      ? showForkMeBlockForProjectIds.includes(firebaseApp.options.appId)
-      : false;
-    if (showForkMeBlock) {
-      import('../elements/fork-me-block');
-    }
-    return showForkMeBlock;
-  }
+  // private shouldShowForkMeBlock(): boolean {
+  //   // const showForkMeBlock = firebaseApp.options.appId
+  //     // ? showForkMeBlockForProjectIds.includes(firebaseApp.options.appId)
+  //     // : false;
+  //   // if (showForkMeBlock) {
+  //   //   import('../elements/fork-me-block');
+  //   // }
+  //   // return showForkMeBlock;
+  // }
 
   override connectedCallback() {
     super.connectedCallback();
     updateMetadata(title, description, INCLUDE_SITE_TITLE.NO);
-    this.showForkMeBlock = this.shouldShowForkMeBlock();
+    // this.showForkMeBlock = this.shouldShowForkMeBlock();
   }
 }
